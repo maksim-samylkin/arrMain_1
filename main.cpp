@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <Windows.h>
 #include <string>
+#include <ctime> 
 
 inline void Getline(std::string& str)
 {
@@ -55,7 +56,7 @@ void PrintArr(const int Arr[carriage][seat])
 {
     for (size_t i = 0; i < carriage  ; i++)
     {
-        std::cout << "Вагон " << i  << "  \n";
+        std::cout << "Вагон " << i + 1  << "  \n";
         for (size_t t = 0; t < seat; t++)
         {
             if (Arr[i][t] == 1)
@@ -92,60 +93,87 @@ void controlArr(int Arr[carriage][seat])
 {
     std::string choose;
     int wagon, place;
-
-    std::cout << "Введите номер вагона (от 1 до 18): ";
-    Getline(choose);
-
-    if (!IsNumber(choose))
+    while (true)
     {
-        std::cout << "Ошибка\n";
-        return;
-    }
 
-    wagon = std::stoi(choose) - 1;
 
-    std::cout << "Введите номер места (от 1 до 36): ";
-    Getline(choose);
+        std::cout << "Введите номер вагона (от 1 до 18): ";
+        Getline(choose);
 
-    if (!IsNumber(choose))
-    {
-        std::cout << "Ошибка\n";
-        return;
-    }
-
-    place = std::stoi(choose) - 1;
-
-    std::cout << "1 - забронировать\n 2 - освободить: ";
-    Getline(choose);
-
-    if (choose == "1")
-    {
-        if (Arr[wagon][place] == 0)
+        if (!IsNumber(choose))
         {
-            Arr[wagon][place] = 1;
-            std::cout << "Забронировано\n";
+            std::cout << "Ошибка\n";
+            return;
         }
+
+        wagon = std::stoi(choose) - 1;
+        if (wagon >= 0 && wagon <= 17)
+        {
+            std::cout << "Введите номер места (от 1 до 36): ";
+            Getline(choose);
+
+            if (!IsNumber(choose))
+            {
+                std::cout << "Ошибка\n";
+                return;
+            }
+
+
+
+            place = std::stoi(choose) - 1;
+            if (place >= 0  && place <= 35)
+            {
+                std::cout << "1 - забронировать\n 2 - освободить: ";
+                Getline(choose);
+
+                if (choose == "1")
+                {
+                    if (Arr[wagon][place] == 0)
+                    {
+                        Arr[wagon][place] = 1;
+                        std::cout << "Забронировано\n";
+                        break;
+                    }
+                    else
+                    {
+                        std::cout << "Уже занято\n";
+                        break;
+                    }
+                }
+                else if (choose == "2")
+                {
+                    if (Arr[wagon][place] == 1)
+                    {
+                        Arr[wagon][place] = 0;
+                        std::cout << "Освобождено\n";
+                        break;
+                    }
+                    else
+                    {
+                        std::cout << "Уже свободно\n";
+                        break;
+                    }
+                }
+                else
+                {
+                    std::cout << "Ошибка\n";
+                }
+            }
+            else
+            {
+                std::cout << "Ошибка\n";
+            }
+         }
+
+          
         else
         {
-            std::cout << "Уже занято\n";
+            std::cout << "Ошибка\n";
         }
     }
-    else if (choose == "2")
-    {
-        if (Arr[wagon][place] == 1)
-        {
-            Arr[wagon][place] = 0;
-            std::cout << "Освобождено\n";
-        }
-        else
-        {
-            std::cout << "Уже свободно\n";
-        }
-    }
-    else
-    {
-        std::cout << "Ошибка\n";
-    }
+
+       
+  
 }
 
 int main()
