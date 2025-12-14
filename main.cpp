@@ -56,7 +56,7 @@ void PrintArr(const int Arr[carriage][seat])
     for (size_t i = 0; i < carriage  ; i++)
     {
         std::cout << "Вагон " << i  << "  \n";
-        for (size_t t = 0; t < seat + 1; t++)
+        for (size_t t = 0; t < seat; t++)
         {
             if (Arr[i][t] == 1)
             {
